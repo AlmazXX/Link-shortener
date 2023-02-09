@@ -1,13 +1,16 @@
 import mongoose from 'mongoose';
-
 const Schema = mongoose.Schema;
 
 const LinkSchema = new Schema({
-    url: {
+    shortUrl: {
         type: String,
-        required: true
-    }
-})
+        required: true,
+    },
+    originalUrl: {
+        type: String,
+        required: true,
+    },
+});
 
-const Link = mongoose.model('Link', LinkSchema);
+const Link = mongoose.model("Link", LinkSchema);
 export default Link;
