@@ -1,5 +1,6 @@
 import { Container, CssBaseline } from "@mui/material";
 import AppToolbar from "./components/UI/AppToolbar/AppToolbar";
+import Link from "./features/link/Link";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       </header>
       <main>
         <Container maxWidth="xl">
+            <Link/>
         </Container>
       </main>
     </>
