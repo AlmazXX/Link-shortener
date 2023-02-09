@@ -6,9 +6,8 @@ import {ILink} from '../types'
 
 const linksRouter = Router();
 
-linksRouter.post("/", async (req, res) => {
+linksRouter.post("/links", async (req, res) => {
     try {
-        console.log(req.body)
         const linkData: ILink = {
             shortUrl: shortener().getLink(),
             originalUrl: req.body.url,
@@ -27,8 +26,18 @@ linksRouter.post("/", async (req, res) => {
 })
 
 linksRouter.get('/:shortUrl', async (req, res) => {
-    const links = await Link.findById(req.params.shortUrl)
-    res.send('Short link will be given here')
+    try {
+        const shortUrl = req.params.shortUrl;
+        const link = await Link.findOne({shortUrl});
+
+        if (!link) {
+            return res.status(404).send({error: 'Short link is not found'})
+        }
+
+        res.status(301).redirect(link.originalUrl)
+    } catch {
+        return res.sendStatus(500)
+    }
 })
 
 export default linksRouter;
