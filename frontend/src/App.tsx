@@ -11,7 +11,7 @@ function App() {
       </header>
       <main>
         <Container maxWidth="xl">
-            <Link/>
+          <Link />
         </Container>
       </main>
     </>

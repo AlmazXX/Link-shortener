@@ -1,8 +1,8 @@
 export interface ILink {
-    originalUrl: string;
-    shortUrl: string;
+  originalUrl: string;
+  shortUrl: string;
 }
 
 export interface ApiLink extends ILink {
-    _id: string;
+  _id: string;
 }

@@ -6,25 +6,25 @@ import {ILink} from "../../types";
 import LinkResult from "./LinkResult";
 
 const Link = () => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    const onSubmit = (link: ILink) => {
-        dispatch(createLink(link))
-    }
+  const onSubmit = (link: ILink) => {
+    dispatch(createLink(link))
+  }
 
-    return (
-        <Grid container direction="column" spacing={2} alignItems='center'>
-            <Grid item>
-                <Typography variant="h4">Shorten your link!</Typography>
-            </Grid>
-            <Grid item>
-                <LinkForm onSubmit={onSubmit} />
-            </Grid>
-            <Grid item>
-                <LinkResult/>
-            </Grid>
-        </Grid>
-    );
+  return (
+    <Grid container direction="column" spacing={2} alignItems='center'>
+      <Grid item>
+        <Typography variant="h4">Shorten your link!</Typography>
+      </Grid>
+      <Grid item>
+        <LinkForm onSubmit={onSubmit}/>
+      </Grid>
+      <Grid item>
+        <LinkResult/>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default Link;
