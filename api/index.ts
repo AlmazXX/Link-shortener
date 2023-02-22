@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import linksRouter from "./routers/links";
 import mongoose from "mongoose";
+import config from "./config";
 
 const app = express();
 const port = 8000;
@@ -12,7 +13,7 @@ app.use("/", linksRouter);
 
 const run = async () => {
   mongoose.set("strictQuery", false);
-  await mongoose.connect("mongodb://localhost/links");
+  await mongoose.connect("mongodb://localhost/" + config.db);
   app.listen(port, () => {
     console.log("We are live on port: " + port);
   });
