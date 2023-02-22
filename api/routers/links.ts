@@ -1,11 +1,11 @@
 import { Router } from "express";
-import Link from "../models/Link";
 import { Shortener } from "../helpers";
+import Link from "../models/Link";
 import { ILink } from "../types";
 
 const linksRouter = Router();
 
-linksRouter.post("/links", async (req, res) => {
+linksRouter.post("/links", async (req, res, next) => {
   try {
     const links = await Link.find();
     const existingLinks = links.map((link) => link.shortUrl);
@@ -22,22 +22,22 @@ linksRouter.post("/links", async (req, res) => {
     await link.save();
     return res.send(link);
   } catch (e) {
-    return res.status(400).send(e);
+    return next(e);
   }
 });
 
-linksRouter.get("/:shortUrl", async (req, res) => {
+linksRouter.get("/:shortUrl", async (req, res, next) => {
   try {
     const shortUrl = req.params.shortUrl;
     const link = await Link.findOne({ shortUrl });
 
     if (!link) {
-      return res.status(404).send({ error: "Short link is not found" });
+      return res.status(404).send({ error: "Short link does not exist" });
     }
 
     res.status(301).redirect(link.originalUrl);
-  } catch {
-    return res.sendStatus(500);
+  } catch (e) {
+    return next(e);
   }
 });
 
