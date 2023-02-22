@@ -1,14 +1,31 @@
-export const shortener = () => {
-  const abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const randIndex = () => Math.floor(Math.random() * abc.length);
+export class Shortener {
+  abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  generatedLinks: string[] = [];
 
-  return {
-    getLink() {
-      let randString = "";
-      for (let i = 0; i < 7; ++i) {
-        randString += abc[randIndex()];
-      }
-      return randString;
-    },
-  };
-};
+  randIndex() {
+    return Math.floor(Math.random() * this.abc.length);
+  }
+
+  randString(length: number) {
+    let newString = "";
+    for (let i = 0; i < length; ++i) {
+      newString += this.abc[this.randIndex()];
+    }
+    return newString;
+  }
+
+  getLink(length = 7): string {
+    const result = this.randString(length);
+
+    if (this.generatedLinks.includes(result)) {
+      return this.getLink(length);
+    } else {
+      this.generatedLinks.push(result);
+      return result;
+    }
+  }
+
+  setLinks(existingLinks: string[]) {
+    this.generatedLinks = existingLinks;
+  }
+}
