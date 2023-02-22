@@ -1,26 +1,28 @@
 import { Router } from "express";
 import Link from "../models/Link";
-import { shortener } from "../helpers";
+import { Shortener } from "../helpers";
 import { ILink } from "../types";
 
 const linksRouter = Router();
 
 linksRouter.post("/links", async (req, res) => {
   try {
+    const links = await Link.find();
+    const existingLinks = links.map((link) => link.shortUrl);
+
+    const shortener = new Shortener();
+    shortener.setLinks(existingLinks);
+
     const linkData: ILink = {
-      shortUrl: shortener().getLink(),
+      shortUrl: shortener.getLink(),
       originalUrl: req.body.url,
     };
-    const link = new Link(linkData);
 
-    try {
-      await link.save();
-      return res.send(link);
-    } catch (e) {
-      return res.status(400).send(e);
-    }
-  } catch {
-    return res.sendStatus(500);
+    const link = new Link(linkData);
+    await link.save();
+    return res.send(link);
+  } catch (e) {
+    return res.status(400).send(e);
   }
 });
 
